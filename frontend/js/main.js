@@ -19,9 +19,20 @@ import {
   getActiveConversation,
 } from "./state/store.js";
 import { initRouter } from "./utils/router.js";
+import { initStatusPill } from "./components/StatusPill.js";
+import { startConnectionMonitor } from "./services/api.js";
 
 function initApp() {
   console.log(`${APP_CONFIG.assistantName} (${APP_CONFIG.appSubtitle}) frontend boot initialized.`);
+
+  // Initialize status pill in header
+  const statusPillSlot = document.getElementById("status-pill-slot");
+  if (statusPillSlot) {
+    initStatusPill(statusPillSlot);
+  }
+
+  // Start connection monitor
+  startConnectionMonitor();
 
   // Expose store helper in debug mode (?debug in URL)
   if (window.location.search.includes("debug")) {
