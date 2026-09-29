@@ -1,5 +1,330 @@
 /**
  * Layout and structural styles for the Avatar app shell.
- * Manages responsive viewports: phone single-column layout, bottom nav,
- * desktop two-column split, and visualViewport handling.
+ * Implements mobile-first responsive architecture:
+ * - Phone (< 900px): Top app bar, scrollable main content, fixed bottom navigation bar.
+ * - Desktop (>= 900px): Two-column layout with 320px fixed left panel and centered 720px screen area.
+ * - Safe area inset support and visualViewport keyboard accommodation.
  */
+
+/* --- App Shell Container --- */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  width: 100%;
+  max-width: 100vw;
+  background-color: var(--color-bg);
+  overflow: hidden;
+  position: relative;
+}
+
+/* --- Top App Bar --- */
+.app-header {
+  height: 56px;
+  min-height: 56px;
+  padding: 0 var(--space-4);
+  padding-top: env(safe-area-inset-top, 0px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 50;
+  flex-shrink: 0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.header-avatar-slot {
+  width: var(--avatar-size-sm);
+  height: var(--avatar-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.header-title-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.assistant-name {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.live-avatar-caption {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  line-height: 1.2;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+/* Header & Sidebar "New Chat" Button */
+.btn-new-chat {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: 36px;
+  padding: 0 var(--space-3);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+
+.btn-new-chat:hover {
+  background-color: var(--color-surface-2);
+  border-color: var(--color-accent-strong);
+}
+
+.btn-new-chat:active {
+  background-color: var(--color-accent-soft);
+}
+
+.main-content-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* --- Main Content Area --- */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  outline: none;
+}
+
+.screen-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.screen-container[hidden] {
+  display: none !important;
+}
+
+.screen-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--chat-max-width);
+  margin: 0 auto;
+  height: 100%;
+}
+
+/* --- Mobile Bottom Navigation (< 900px) --- */
+.mobile-bottom-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: calc(56px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  z-index: 50;
+  flex-shrink: 0;
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  flex: 1;
+  height: 100%;
+  min-height: var(--touch-target-min);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  transition: color var(--dur-fast) var(--ease);
+  position: relative;
+}
+
+.mobile-nav-item:hover {
+  color: var(--color-text);
+}
+
+.mobile-nav-item[aria-current="page"] {
+  color: var(--color-text);
+  font-weight: var(--font-weight-bold);
+}
+
+.mobile-nav-item[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 25%;
+  right: 25%;
+  height: 3px;
+  background-color: var(--color-accent-strong);
+  border-radius: var(--radius-full);
+}
+
+/* Desktop Sidebar Hidden on Mobile */
+.desktop-sidebar {
+  display: none;
+}
+
+/* --- Desktop Layout (>= 900px) --- */
+@media (min-width: 900px) {
+  .app-layout {
+    flex-direction: row;
+  }
+
+  /* Hide mobile bottom navigation */
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+
+  /* Hide app bar avatar & title since sidebar displays it prominently */
+  .app-header .header-left {
+    display: none;
+  }
+
+  .app-header {
+    justify-content: flex-end;
+    border-bottom: 1px solid var(--color-border);
+    height: 52px;
+    min-height: 52px;
+  }
+
+  /* Show desktop sidebar */
+  .desktop-sidebar {
+    display: flex;
+    flex-direction: column;
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    height: 100dvh;
+    background-color: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    padding: var(--space-6) var(--space-5);
+    flex-shrink: 0;
+    z-index: 60;
+  }
+
+  .sidebar-avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+    gap: var(--space-3);
+  }
+
+  .sidebar-avatar-section #sidebar-avatar-slot {
+    width: var(--avatar-size-lg);
+    height: var(--avatar-size-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sidebar-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sidebar-name {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+  }
+
+  .sidebar-status-caption {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+  }
+
+  /* Vertical desktop navigation */
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-6);
+    flex: 1;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+  }
+
+  .nav-item:hover {
+    background-color: var(--color-surface-2);
+    color: var(--color-text);
+  }
+
+  .nav-item[aria-current="page"] {
+    background-color: var(--color-accent-soft);
+    color: var(--color-text);
+    font-weight: var(--font-weight-bold);
+    border: 1px solid var(--color-accent-strong);
+  }
+
+  .sidebar-footer {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .sidebar-btn-new-chat {
+    width: 100%;
+    height: 42px;
+  }
+
+  /* Main content wrapper on desktop */
+  .main-content-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    min-width: 0;
+    overflow: hidden;
+  }
+}
