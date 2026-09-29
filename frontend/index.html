@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#fffae7">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Avatar (Clone AI) — Friendly, intelligent conversational assistant with voice and animated avatar.">
+  <title>Avatar — Clone AI</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <!-- Google Font: Nunito (Single external resource allowed, with robust system fallback in CSS) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/avatar.css">
+  <link rel="stylesheet" href="css/screens.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div id="app" class="app-layout">
+    <!-- Desktop Sidebar (>= 900px) -->
+    <aside class="desktop-sidebar" id="desktop-sidebar" aria-label="Sidebar">
+      <div class="sidebar-avatar-section">
+        <div id="sidebar-avatar-slot"></div>
+        <div class="sidebar-info">
+          <h2 class="sidebar-name" id="sidebar-name-display">Avatar</h2>
+          <p class="sidebar-status-caption" id="sidebar-status-caption">Ready</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Desktop primary navigation">
+        <a href="#/chat" class="nav-item" data-route="chat" id="desktop-nav-chat">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span>Chat</span>
+        </a>
+        <a href="#/history" class="nav-item" data-route="history" id="desktop-nav-history">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>History</span>
+        </a>
+        <a href="#/settings" class="nav-item" data-route="settings" id="desktop-nav-settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button type="button" class="btn-new-chat sidebar-btn-new-chat" id="sidebar-new-chat-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          <span>New chat</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Column -->
+    <div class="main-content-column">
+      <header class="app-header" id="app-header">
+        <div class="header-left">
+          <div id="header-avatar-slot" class="header-avatar-slot" aria-hidden="true"></div>
+          <div class="header-title-group">
+            <span class="assistant-name" id="assistant-name-display">Avatar</span>
+            <span class="live-avatar-caption" id="avatar-caption-header">Ready</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <div id="status-pill-slot"></div>
+          <button type="button" class="btn-new-chat" id="header-new-chat-btn" aria-label="Start new conversation" title="Start new conversation">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+            <span class="btn-text">New chat</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Content Area -->
+      <main id="main-content" class="main-content" tabindex="-1">
+        <section id="screen-chat" class="screen-container" aria-labelledby="chat-heading">
+          <h1 id="chat-heading" class="visually-hidden">Chat with Avatar</h1>
+          <div id="chat-screen-slot" class="screen-inner">
+            <div style="padding: 24px; text-align: center;">Chat Screen Placeholder</div>
+          </div>
+        </section>
+
+        <section id="screen-history" class="screen-container" aria-labelledby="history-heading" hidden>
+          <h1 id="history-heading" class="visually-hidden">Conversation History</h1>
+          <div id="history-screen-slot" class="screen-inner">
+            <div style="padding: 24px; text-align: center;">History Screen Placeholder</div>
+          </div>
+        </section>
+
+        <section id="screen-settings" class="screen-container" aria-labelledby="settings-heading" hidden>
+          <h1 id="settings-heading" class="visually-hidden">Settings</h1>
+          <div id="settings-screen-slot" class="screen-inner">
+            <div style="padding: 24px; text-align: center;">Settings Screen Placeholder</div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Mobile Bottom Navigation (< 900px) -->
+      <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Mobile primary navigation">
+        <a href="#/chat" class="mobile-nav-item" data-route="chat" id="mobile-nav-chat">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span>Chat</span>
+        </a>
+        <a href="#/history" class="mobile-nav-item" data-route="history" id="mobile-nav-history">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>History</span>
+        </a>
+        <a href="#/settings" class="mobile-nav-item" data-route="settings" id="mobile-nav-settings">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Accessible live region for avatar state announcements -->
+    <div id="avatar-live-announcer" class="visually-hidden" role="status" aria-live="polite"></div>
+
+    <!-- Toast container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
